@@ -79,12 +79,29 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/io.github.kobylynskyi/graphql-codegen-maven-plugin -->
+        <dependency>
+            <groupId>io.github.kobylynskyi</groupId>
+            <artifactId>graphql-codegen-maven-plugin</artifactId>
+            <version>5.9.0</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/io.github.kobylynskyi/graphql-java-codegen -->
         <dependency>
             <groupId>io.github.kobylynskyi</groupId>
             <artifactId>graphql-java-codegen</artifactId>
             <version>5.9.0</version>
         </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-common -->
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-common</artifactId>
+            <version>3.1.5</version>
+        </dependency>
+
+
 
     </dependencies>
 
@@ -103,6 +120,37 @@
                     </excludes>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>io.github.kobylynskyi</groupId>
+                <artifactId>graphql-codegen-maven-plugin</artifactId>
+                <version>5.9.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <graphqlSchemaPaths>${project.basedir}/src/main/resources/saf/schema.graphql</graphqlSchemaPaths>
+                            <outputDir>${project.build.directory}/generated-sources/graphql</outputDir>
+                            <packageName>com.bachelor.vju_vm_apla2.graphql</packageName>
+                            <customTypesMapping>
+                                <DateTime>java.util.Date</DateTime>
+                                <Price.amount>java.math.BigDecimal</Price.amount>
+                            </customTypesMapping>
+                            <generateClient>true</generateClient>
+                            <generateApis>false</generateApis>
+                            <generateBuilder>false</generateBuilder>
+                            <generateToString>true</generateToString>
+                            <generateParameterizedFieldsResolvers>false</generateParameterizedFieldsResolvers>
+                            <addGeneratedAnnotation>true</addGeneratedAnnotation>
+                            <generatedAnnotation>jakarta.annotation.Generated</generatedAnnotation>
+                            <modelValidationAnnotation>@jakarta.validation.constraints.NotNull</modelValidationAnnotation>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
